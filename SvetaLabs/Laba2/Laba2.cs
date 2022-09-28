@@ -41,17 +41,13 @@ namespace SvetaLabs.Laba2
                 {
                     var result = FindCountOfNumber(matrix, item);
                     dict.Add(item, result);
-
-                    //Console.WriteLine("Current Tread {0}", Thread.CurrentThread.ManagedThreadId);
                 }
             }
 
+
             Console.WriteLine("Done");
 
-            //foreach (var item in dict)
-            //{
-            //    Console.WriteLine($"{item.Key} - {item.Value}");
-            //}
+
         }
 
         private int FindCountOfNumber(int[,] matrix, int num)
@@ -72,9 +68,27 @@ namespace SvetaLabs.Laba2
             return count;
         }
 
+        private Tuple<int, int> FindCountOfNumberAsync(int[,] matrix, int num)
+        {
+            int count = 0;
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if (num == matrix[i, j])
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return new Tuple<int, int>(num, count);
+        }
+
         public void StartWithMultiTreading()
         {
-            Func<int[,], int, int> func = new Func<int[,], int, int>(FindCountOfNumber);
+            
 
             int[,] matrix = new int[height, width];
 
@@ -86,11 +100,8 @@ namespace SvetaLabs.Laba2
                 }
             }
 
-
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            {
-
-            }
+            var asyncResultList = new List<IAsyncResult>();
+            var funcList = new List<Func<int[,], int, Tuple<int, int>>>();
 
             var dict = new Dictionary<int, int>();
 
@@ -102,31 +113,27 @@ namespace SvetaLabs.Laba2
                 }
                 else
                 {
+                    Func<int[,], int, Tuple<int, int>> func = 
+                        new Func<int[,], int, Tuple<int, int>>(FindCountOfNumberAsync);
                     IAsyncResult asyncResult = func.BeginInvoke(matrix, item, null, null); 
-                    dict.Add(item, func.EndInvoke(asyncResult));
+                    dict.Add(item, 0);
+                    asyncResultList.Add(asyncResult);
+                    funcList.Add(func);
                 }
             }
 
+
+
+            for (int i = 0; i < asyncResultList.Count; i++)
+            {
+                var res = funcList[i].EndInvoke(asyncResultList[i]);
+
+                dict[res.Item1] = res.Item2;
+            }
+
+
+
             Console.WriteLine("Done");
-
-            //foreach (var item in dict)
-            //{
-            //    Console.WriteLine($"{item.Key} - {item.Value}");
-            //}
-
-            //for (int i = 0; i < matrix.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < matrix.GetLength(1); j++)
-            //    {
-            //        Console.Write(matrix[i,j] + " ");
-            //    }
-            //    Console.WriteLine();
-            //}
-        }
-
-        private void AddComplete(IAsyncResult asyncResult)
-        {
-            //Console.WriteLine("Current Tread {0}" , Thread.CurrentThread.ManagedThreadId);
         }
     }
 }

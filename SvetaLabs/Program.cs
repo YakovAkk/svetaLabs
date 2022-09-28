@@ -11,16 +11,16 @@ namespace SvetaLabs
             var laba2 = new Laba2Parallel();
 
             var sw = new Stopwatch();
-            //sw.Start();
-            //laba2.StartWithoutMultiTreading();
-            //sw.Stop();
+            sw.Start();
+            laba2.StartWithoutMultiTreading();
+            sw.Stop();
 
-            //Console.WriteLine($"StartWithoutMultiTreading was ended in {sw.ElapsedMilliseconds}");
+            Console.WriteLine($"StartWithoutMultiTreading was ended in {sw.ElapsedMilliseconds}");
 
-            //sw.Reset();
+            sw.Reset();
             sw.Start();
             laba2.StartWithMultiTreading();
-            
+
             sw.Stop();
 
             Console.WriteLine($"StartWithMultiTreading was ended in {sw.ElapsedMilliseconds}");
