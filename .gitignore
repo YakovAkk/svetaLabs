@@ -1,0 +1,12 @@
+.vs/
+*.p7s
+*.nupkg
+obj/
+*.exe
+*.suo
+*.dll
+*.so
+*.dylib
+bin/
+*.log
+*.txt
