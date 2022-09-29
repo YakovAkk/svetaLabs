@@ -1,4 +1,5 @@
 ﻿using SvetaLabs.Laba2;
+using SvetaLabs.Laba3;
 using System;
 using System.Diagnostics;
 
@@ -8,22 +9,11 @@ namespace SvetaLabs
     {
         static void Main(string[] args)
         {
-            var laba2 = new Laba2Parallel();
+            //var laba2 = new Laba2Parallel();
+            //laba2.Start();
 
-            var sw = new Stopwatch();
-            sw.Start();
-            laba2.StartWithoutMultiTreading();
-            sw.Stop();
-
-            Console.WriteLine($"StartWithoutMultiTreading was ended in {sw.ElapsedMilliseconds}");
-
-            sw.Reset();
-            sw.Start();
-            laba2.StartWithMultiTreading();
-
-            sw.Stop();
-
-            Console.WriteLine($"StartWithMultiTreading was ended in {sw.ElapsedMilliseconds}");
+            var laba3 = new Laba3Parallel();
+            laba3.Start();
 
             Console.ReadKey();
         }

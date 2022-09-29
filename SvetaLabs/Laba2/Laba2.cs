@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -17,7 +18,26 @@ namespace SvetaLabs.Laba2
             height = 1000;
             width = 1000;
         }
-        public void StartWithoutMultiTreading()
+
+        public void Start()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            StartWithoutMultiTreading();
+            sw.Stop();
+
+            Console.WriteLine($"StartWithoutMultiTreading was ended in {sw.ElapsedMilliseconds}");
+
+            sw.Reset();
+            sw.Start();
+            StartWithMultiTreading();
+
+            sw.Stop();
+
+            Console.WriteLine($"StartWithMultiTreading was ended in {sw.ElapsedMilliseconds}");
+        }
+
+        private void StartWithoutMultiTreading()
         {
             int[,] matrix = new int[height, width];
 
@@ -86,7 +106,7 @@ namespace SvetaLabs.Laba2
             return new Tuple<int, int>(num, count);
         }
 
-        public void StartWithMultiTreading()
+        private void StartWithMultiTreading()
         {
             
 
