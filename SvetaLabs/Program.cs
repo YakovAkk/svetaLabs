@@ -1,7 +1,5 @@
-﻿using SvetaLabs.Laba2;
-using SvetaLabs.Laba3;
+﻿using SvetaLabs.Laba3;
 using System;
-using System.Diagnostics;
 
 namespace SvetaLabs
 {
