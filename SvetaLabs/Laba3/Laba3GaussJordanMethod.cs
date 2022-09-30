@@ -5,10 +5,34 @@ using System.Threading;
 
 namespace SvetaLabs.Laba3
 {
-    public class Laba3Parallel
+    public class Laba3GaussJordanMethod
     {
-        static Random random = new Random();
-        public int Size = 1000;
+        private static Random _random = new Random();
+        private int _size = 1000;
+
+        private double[,] _matrixCoef;
+        private double[] _freeCoef; 
+
+        public Laba3GaussJordanMethod()
+        {
+           
+            _matrixCoef = new double[_size, _size];
+
+            for (int i = 0; i < _matrixCoef.GetLength(0); i++)
+            {
+                for (int j = 0; j < _matrixCoef.GetLength(1); j++)
+                {
+                    _matrixCoef[i, j] = _random.NextDouble();
+                }
+            }
+
+            _freeCoef = new double[_size];
+
+            for (int i = 0; i < _freeCoef.Length; i++)
+            {
+                _freeCoef[i] = _random.NextDouble();
+            }
+        }
         public void Start()
         {
             var sw = new Stopwatch();
@@ -27,80 +51,44 @@ namespace SvetaLabs.Laba3
         }
         public void StartWithoutMultiTreading()
         {
-
-            double[,] MatrixCoef = new double[Size, Size];
-
-            for (int i = 0; i < MatrixCoef.GetLength(0); i++)
-            {
-                for (int j = 0; j < MatrixCoef.GetLength(1); j++)
-                {
-                    MatrixCoef[i, j] = random.NextDouble();
-                }
-            }
-
-            double[] FreeCoef = new double[Size];
-
-            for (int i = 0; i < FreeCoef.Length; i++)
-            {
-                FreeCoef[i] = random.NextDouble();
-            }
-
             double Multi1, Multi2;
-            double[] Result = new double[Size];
+            double[] Result = new double[_size];
             Console.WriteLine();
             
-            for (int k = 0; k < Size; k++)
+            for (int k = 0; k < _size; k++)
             {
-                for (int j = k + 1; j < Size; j++)
+                for (int j = k + 1; j < _size; j++)
                 {
-                    Multi1 = MatrixCoef[j, k] / MatrixCoef[k, k];
-                    for (int i = k; i < Size; i++)
+                    Multi1 = _matrixCoef[j, k] / _matrixCoef[k, k];
+                    for (int i = k; i < _size; i++)
                     {
-                        MatrixCoef[j, i] = MatrixCoef[j, i] - Multi1 * MatrixCoef[k, i];
+                        _matrixCoef[j, i] = _matrixCoef[j, i] - Multi1 * _matrixCoef[k, i];
                     }
-                    FreeCoef[j] = FreeCoef[j] - Multi1 * FreeCoef[k];
+                    _freeCoef[j] = _freeCoef[j] - Multi1 * _freeCoef[k];
                 }
             }
-            for (int k = Size - 1; k >= 0; k--)
+            for (int k = _size - 1; k >= 0; k--)
             {
                 Multi1 = 0;
-                for (int j = k; j < Size; j++)
+                for (int j = k; j < _size; j++)
                 {
-                    Multi2 = MatrixCoef[k, j] * Result[j];
+                    Multi2 = _matrixCoef[k, j] * Result[j];
                     Multi1 += Multi2;
                 }
-                Result[k] = (FreeCoef[k] - Multi1) / MatrixCoef[k, k];
+                Result[k] = (_freeCoef[k] - Multi1) / _matrixCoef[k, k];
             }
 
             Console.WriteLine("Done");
         }
         public void StartWithMultiTreading()
         {
-            double[,] MatrixCoef = new double[Size, Size];
-
-            for (int i = 0; i < MatrixCoef.GetLength(0); i++)
-            {
-                for (int j = 0; j < MatrixCoef.GetLength(1); j++)
-                {
-                    MatrixCoef[i, j] = random.NextDouble();
-                }
-            }
-
-            double[] FreeCoef = new double[Size];
-
-            for (int i = 0; i < FreeCoef.Length; i++)
-            {
-                FreeCoef[i] = random.NextDouble();
-            }
-
-            double Multi1, Multi2;
-            double[] Result = new double[Size];
+            double[] Result = new double[_size];
 
             var thr = new List<Thread>();
 
-            for (int k = 0; k < Size; k++)
+            for (int k = 0; k < _size; k++)
             {
-                thr.Add( new Thread(() =>  CountingMatrix(MatrixCoef, FreeCoef, k)));
+                thr.Add( new Thread(() =>  CountingMatrix(_matrixCoef, _freeCoef, k)));
             }
 
             foreach (var item in thr)
@@ -111,9 +99,9 @@ namespace SvetaLabs.Laba3
 
             var thr2 = new List<Thread>();
 
-            for (int k = Size - 1; k >= 0; k--)
+            for (int k = _size - 1; k >= 0; k--)
             {
-                thr.Add(new Thread(() => GetResult(MatrixCoef, FreeCoef, Result, k)));
+                thr.Add(new Thread(() => GetResult(_matrixCoef, _freeCoef, Result, k)));
             }
 
             foreach (var item in thr2)
@@ -128,7 +116,7 @@ namespace SvetaLabs.Laba3
             double[] FreeCoef, double[] Result, int k)
         {
             double Multi1 = 0, Multi2 = 0;
-            for (int j = k; j < Size; j++)
+            for (int j = k; j < _size; j++)
             {
                 Multi2 = MatrixCoef[k, j] * Result[j];
                 Multi1 += Multi2;
@@ -138,10 +126,10 @@ namespace SvetaLabs.Laba3
         private double CountingMatrix(double[,] MatrixCoef, double[] FreeCoef, int k)
         {
             double Multi1 = 0;
-            for (int j = k + 1; j < Size; j++)
+            for (int j = k + 1; j < _size; j++)
             {
                 Multi1 = MatrixCoef[j, k] / MatrixCoef[k, k];
-                for (int i = k; i < Size; i++)
+                for (int i = k; i < _size; i++)
                 {
                     MatrixCoef[j, i] = MatrixCoef[j, i] - Multi1 * MatrixCoef[k, i];
                 }

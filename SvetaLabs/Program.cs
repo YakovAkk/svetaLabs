@@ -10,7 +10,7 @@ namespace SvetaLabs
             //var laba2 = new Laba2Parallel();
             //laba2.Start();
 
-            var laba3 = new Laba3Parallel();
+            var laba3 = new Laba3QuasiMinimalMethod();
             laba3.Start();
 
             Console.ReadKey();
