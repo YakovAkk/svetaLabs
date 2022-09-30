@@ -34,28 +34,44 @@ namespace SvetaLabs.Laba3
 
         public void Start()
         {
-
-            var measureTheTime = new MeasureTheTime();
+            var measureTheTime = new MeasureTheTime(); // створюємо екземпляр классу який вимірює час 
 
             Console.WriteLine($"StartWithoutMultiTreading was ended in " +
-                $"{measureTheTime.GiveTimeOfWorking(StartWithoutMultiTreading)}");
+                $"{measureTheTime.GiveTimeOfWorking(StartWithoutMultiTreading)}"); // вимірюємо час роботи функції StartWithoutMultiTreading
 
             Console.WriteLine($"StartWithMultiTreading was ended in " +
-                $"{measureTheTime.GiveTimeOfWorking(StartWithMultiTreading)}");
+                $"{measureTheTime.GiveTimeOfWorking(StartWithMultiTreading)}"); // вимірюємо час роботи функції StartWithMultiTreading
         }
 
         public void StartWithoutMultiTreading()
         {
-
-            double[][] Q = null;
+            // створюємо тимчасові масиви для розрунків
+            double[][] Q = null; 
             double[][] R = null;
 
+            // визиваємо функцію для розрахунків MatDecompQR
             int dummy = MatDecompQR(_matrixCoef, out Q, out R);
 
+            // визиваємо функцію для розрахунків MatProduct
             double[][] qr = MatProduct(Q, R);
 
             Console.WriteLine("\nEnd demo");
 
+        }
+
+        public void StartWithMultiTreading()
+        {
+            // створюємо тимчасові масиви для розрунків
+            double[][] Q = null;
+            double[][] R = null;
+
+            // визиваємо функцію для розрахунків MatDecompQR
+            int dummy = MatDecompQRWithThreads(_matrixCoef, out Q, out R);
+
+            // визиваємо функцію для розрахунків MatProduct
+            double[][] qr = MatProduct(Q, R);
+
+            Console.WriteLine("\nEnd demo");
         }
         private int MatDecompQR(double[][] A, out double[][] Q, out double[][] R)
         {
@@ -206,9 +222,10 @@ namespace SvetaLabs.Laba3
             for (int i = 1; i < rows; ++i)
             {
                 thr.Add(new Thread(() => accum = ThreadFunction(a, u, cols, accum, i)));
+                // запускаємо в потік функцію ThreadFunction яка записує результати у масив accum
             }
 
-            foreach (var item in thr)
+            foreach (var item in thr) // запускаємо потоки та отримуємо від них результати
             {
                 item.Start();
                 item.Join();
@@ -257,17 +274,7 @@ namespace SvetaLabs.Laba3
                 u[i][k] = a[i][k] - accum[k];
             return accum;
         }
-        public void StartWithMultiTreading() 
-        {
-            double[][] Q = null;
-            double[][] R = null;
 
-            int dummy = MatDecompQRWithThreads(_matrixCoef, out Q, out R);
-
-            double[][] qr = MatProduct(Q, R);
-
-            Console.WriteLine("\nEnd demo");
-        }
 
     }
 }

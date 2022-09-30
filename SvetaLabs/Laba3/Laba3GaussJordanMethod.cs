@@ -12,8 +12,8 @@ namespace SvetaLabs.Laba3
         private int _size = 1000;
 
         private double[,] _matrixCoef;
-        private double[] _freeCoef; 
-
+        private double[] _freeCoef;
+        private double[] _result;
         public Laba3GaussJordanMethod()
         {
            
@@ -31,76 +31,84 @@ namespace SvetaLabs.Laba3
 
             for (int i = 0; i < _freeCoef.Length; i++)
             {
-                _freeCoef[i] = _random.NextDouble();
+                _freeCoef[i] = _random.Next(_size);
             }
-        }
-        public void Start() 
-        {
 
-            var measureTheTime = new MeasureTheTime();
+            _result = new double[_size];
+
+            for (int i = 0; i < _result.Length; i++)
+            {
+                _result[i] = _random.NextDouble();
+            }
+
+        }
+        public void Start()
+        {
+            var measureTheTime = new MeasureTheTime(); // створюємо екземпляр классу який вимірює час 
 
             Console.WriteLine($"StartWithoutMultiTreading was ended in " +
-                $"{measureTheTime.GiveTimeOfWorking(StartWithoutMultiTreading)}");
+                $"{measureTheTime.GiveTimeOfWorking(StartWithoutMultiTreading)}"); // вимірюємо час роботи функції StartWithoutMultiTreading
 
             Console.WriteLine($"StartWithMultiTreading was ended in " +
-                $"{measureTheTime.GiveTimeOfWorking(StartWithMultiTreading)}");
+                $"{measureTheTime.GiveTimeOfWorking(StartWithMultiTreading)}"); // вимірюємо час роботи функції StartWithMultiTreading
         }
         public void StartWithoutMultiTreading()
         {
-            double Multi1, Multi2;
-            double[] Result = new double[_size];
-            Console.WriteLine();
-            
+            double Multi1, Multi2;  // створбємо тимчасові змінні
+                        
             for (int k = 0; k < _size; k++)
             {
                 for (int j = k + 1; j < _size; j++)
                 {
-                    Multi1 = _matrixCoef[j, k] / _matrixCoef[k, k];
+                    Multi1 = _matrixCoef[j, k] / _matrixCoef[k, k]; // ділемо відповідні коефіцієтти відповідних рядків матриці
                     for (int i = k; i < _size; i++)
+                        // цикл проходиться по всім коефіцієнтам рядка i та ділить їх на відповідні коеф рядка k
                     {
-                        _matrixCoef[j, i] = _matrixCoef[j, i] - Multi1 * _matrixCoef[k, i];
+                        _matrixCoef[j, i] = _matrixCoef[j, i] - Multi1 * _matrixCoef[k, i];  
                     }
-                    _freeCoef[j] = _freeCoef[j] - Multi1 * _freeCoef[k];
+                    _freeCoef[j] = _freeCoef[j] - Multi1 * _freeCoef[k]; // віднімаємо рядки щоб знищити коеф
                 }
             }
-            for (int k = _size - 1; k >= 0; k--)
+
+            for (int k = _size - 1; k >= 0; k--) // проходимся по рядку k для того щиб знищити коефіціентки які домножили перед цим 
             {
                 Multi1 = 0;
                 for (int j = k; j < _size; j++)
                 {
-                    Multi2 = _matrixCoef[k, j] * Result[j];
+                    Multi2 = _matrixCoef[k, j] * _result[j];
                     Multi1 += Multi2;
                 }
-                Result[k] = (_freeCoef[k] - Multi1) / _matrixCoef[k, k];
+                _result[k] = (_freeCoef[k] - Multi1) / _matrixCoef[k, k]; // записуємо значення всіх коефіцієнтів у масив відповідей
             }
 
             Console.WriteLine("Done");
         }
         public void StartWithMultiTreading()
         {
-            double[] Result = new double[_size];
 
-            var thr = new List<Thread>();
+            var thr = new List<Thread>(); // створюємо лист потоків
 
             for (int k = 0; k < _size; k++)
             {
-                thr.Add( new Thread(() =>  CountingMatrix(_matrixCoef, _freeCoef, k)));
+                thr.Add( new Thread(() =>  CountingMatrix(_matrixCoef, _freeCoef, k))); 
+                // запускаємо в потік функцію яка домножає коефіцієнти відповідних рядків матриці
             }
 
-            foreach (var item in thr)
+            foreach (var item in thr) // запускаємо потоки та отримуємо від них результати
             {
                 item.Start();
                 item.Join();
             }
 
-            var thr2 = new List<Thread>();
+            var thr2 = new List<Thread>(); // створюємо лист потоків
 
             for (int k = _size - 1; k >= 0; k--)
             {
-                thr.Add(new Thread(() => GetResult(_matrixCoef, _freeCoef, Result, k)));
+                thr.Add(new Thread(() => GetResult(_matrixCoef, _freeCoef, _result, k)));
+                // запускаємо в потік функцію яка записує результати у масив _result
             }
 
-            foreach (var item in thr2)
+            foreach (var item in thr2) // запускаємо потоки та отримуємо від них результати
             {
                 item.Start();
                 item.Join();
@@ -119,7 +127,7 @@ namespace SvetaLabs.Laba3
             }
             Result[k] = (FreeCoef[k] - Multi1) / MatrixCoef[k, k];
         }
-        private double CountingMatrix(double[,] MatrixCoef, double[] FreeCoef, int k)
+        private void CountingMatrix(double[,] MatrixCoef, double[] FreeCoef, int k)
         {
             double Multi1 = 0;
             for (int j = k + 1; j < _size; j++)
@@ -131,8 +139,6 @@ namespace SvetaLabs.Laba3
                 }
                 FreeCoef[j] = FreeCoef[j] - Multi1 * FreeCoef[k];
             }
-
-            return Multi1;
         }
     }
 }
