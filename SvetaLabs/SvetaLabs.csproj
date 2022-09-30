@@ -46,6 +46,7 @@
     <Compile Include="Laba2\Laba2.cs" />
     <Compile Include="Laba3\Laba3GaussJordanMethod.cs" />
     <Compile Include="Laba3\Laba3QuasiMinimalMethod.cs" />
+    <Compile Include="MeasureTime\MeasureTheTime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

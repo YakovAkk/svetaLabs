@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SvetaLabs.MeasureTime;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,20 +33,13 @@ namespace SvetaLabs.Laba2
 
         public void Start()
         {
-            var sw = new Stopwatch();
-            sw.Start();
-            StartWithoutMultiTreading();
-            sw.Stop();
+            var measureTheTime = new MeasureTheTime();
 
-            Console.WriteLine($"StartWithoutMultiTreading was ended in {sw.ElapsedMilliseconds}");
+            Console.WriteLine($"StartWithoutMultiTreading was ended in " +
+                $"{measureTheTime.GiveTimeOfWorking(StartWithoutMultiTreading)}");
 
-            sw.Reset();
-            sw.Start();
-            StartWithMultiTreading();
-
-            sw.Stop();
-
-            Console.WriteLine($"StartWithMultiTreading was ended in {sw.ElapsedMilliseconds}");
+            Console.WriteLine($"StartWithMultiTreading was ended in " +
+                $"{measureTheTime.GiveTimeOfWorking(StartWithMultiTreading)}");
         }
         private void StartWithoutMultiTreading()
         {
