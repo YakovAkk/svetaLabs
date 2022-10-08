@@ -46,6 +46,17 @@
     <Compile Include="Laba2\Laba2.cs" />
     <Compile Include="Laba3\Laba3GaussJordanMethod.cs" />
     <Compile Include="Laba3\Laba3QuasiMinimalMethod.cs" />
+    <Compile Include="Laba6\AStarSearchAsync\AStarSearchAsync.cs" />
+    <Compile Include="Laba6\AStarSearchAsync\LocationAsync.cs" />
+    <Compile Include="Laba6\AStarSearchAsync\PriorityQueueAsync.cs" />
+    <Compile Include="Laba6\AStarSearchAsync\SquareGridAsync.cs" />
+    <Compile Include="Laba6\AStarSearchAsync\WeightedGraphAsync.cs" />
+    <Compile Include="Laba6\AStarSearch\AStarSearch.cs" />
+    <Compile Include="Laba6\Laba6Graf.cs" />
+    <Compile Include="Laba6\AStarSearch\Location.cs" />
+    <Compile Include="Laba6\AStarSearch\PriorityQueue.cs" />
+    <Compile Include="Laba6\AStarSearch\SquareGrid.cs" />
+    <Compile Include="Laba6\AStarSearch\WeightedGraph.cs" />
     <Compile Include="MeasureTime\MeasureTheTime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,5 +64,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
