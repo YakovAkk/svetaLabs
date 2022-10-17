@@ -57,6 +57,9 @@
     <Compile Include="Laba6\AStarSearch\PriorityQueue.cs" />
     <Compile Include="Laba6\AStarSearch\SquareGrid.cs" />
     <Compile Include="Laba6\AStarSearch\WeightedGraph.cs" />
+    <Compile Include="Laba7\WorkWithFiles\GenerateFiles.cs" />
+    <Compile Include="Laba7\Laba7CartesianProduct.cs" />
+    <Compile Include="Laba7\WorkWithFiles\ReadFromFile.cs" />
     <Compile Include="MeasureTime\MeasureTheTime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

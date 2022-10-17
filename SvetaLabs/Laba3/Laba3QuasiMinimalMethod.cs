@@ -1,7 +1,6 @@
 ﻿using SvetaLabs.MeasureTime;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 
 namespace SvetaLabs.Laba3
@@ -46,7 +45,7 @@ namespace SvetaLabs.Laba3
         public void StartWithoutMultiTreading()
         {
             // створюємо тимчасові масиви для розрунків
-            double[][] Q = null; 
+            double[][] Q = null;
             double[][] R = null;
 
             // визиваємо функцію для розрахунків MatDecompQR
@@ -127,7 +126,7 @@ namespace SvetaLabs.Laba3
                     R[i][j] = r[i][j];
 
             return 0;
-        } 
+        }
         private double VecNorm(double[] vec)
         {
             double sum = 0.0;
@@ -269,7 +268,7 @@ namespace SvetaLabs.Laba3
                         accum[k] += proj[k];
                 }
             }
-            
+
             for (int k = 0; k < cols; ++k)
                 u[i][k] = a[i][k] - accum[k];
             return accum;

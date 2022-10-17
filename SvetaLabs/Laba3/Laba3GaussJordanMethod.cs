@@ -1,7 +1,6 @@
 ﻿using SvetaLabs.MeasureTime;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 
 namespace SvetaLabs.Laba3
@@ -16,7 +15,7 @@ namespace SvetaLabs.Laba3
         private double[] _result;
         public Laba3GaussJordanMethod()
         {
-           
+
             _matrixCoef = new double[_size, _size];
 
             for (int i = 0; i < _matrixCoef.GetLength(0); i++)
@@ -55,16 +54,16 @@ namespace SvetaLabs.Laba3
         public void StartWithoutMultiTreading()
         {
             double Multi1, Multi2;  // створбємо тимчасові змінні
-                        
+
             for (int k = 0; k < _size; k++)
             {
                 for (int j = k + 1; j < _size; j++)
                 {
                     Multi1 = _matrixCoef[j, k] / _matrixCoef[k, k]; // ділемо відповідні коефіцієтти відповідних рядків матриці
                     for (int i = k; i < _size; i++)
-                        // цикл проходиться по всім коефіцієнтам рядка i та ділить їх на відповідні коеф рядка k
+                    // цикл проходиться по всім коефіцієнтам рядка i та ділить їх на відповідні коеф рядка k
                     {
-                        _matrixCoef[j, i] = _matrixCoef[j, i] - Multi1 * _matrixCoef[k, i];  
+                        _matrixCoef[j, i] = _matrixCoef[j, i] - Multi1 * _matrixCoef[k, i];
                     }
                     _freeCoef[j] = _freeCoef[j] - Multi1 * _freeCoef[k]; // віднімаємо рядки щоб знищити коеф
                 }
@@ -90,7 +89,7 @@ namespace SvetaLabs.Laba3
 
             for (int k = 0; k < _size; k++)
             {
-                thr.Add( new Thread(() =>  CountingMatrix(_matrixCoef, _freeCoef, k))); 
+                thr.Add(new Thread(() => CountingMatrix(_matrixCoef, _freeCoef, k)));
                 // запускаємо в потік функцію яка домножає коефіцієнти відповідних рядків матриці
             }
 
@@ -116,7 +115,7 @@ namespace SvetaLabs.Laba3
 
             Console.WriteLine("Done");
         }
-        private void GetResult(double[,] MatrixCoef, 
+        private void GetResult(double[,] MatrixCoef,
             double[] FreeCoef, double[] Result, int k)
         {
             double Multi1 = 0, Multi2 = 0;

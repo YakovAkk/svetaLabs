@@ -21,7 +21,7 @@ namespace SvetaLabs.AStarSearchAsync.Laba6
             CreateAStarSerchAsync(graph, start, goal);
         }
 
-        private async Task CreateAStarSerchAsync(WeightedGraphAsync<LocationAsync> graph, 
+        private async Task CreateAStarSerchAsync(WeightedGraphAsync<LocationAsync> graph,
             LocationAsync start, LocationAsync goal)
         {
             var frontier = new PriorityQueueAsync<LocationAsync>();

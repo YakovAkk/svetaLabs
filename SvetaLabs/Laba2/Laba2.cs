@@ -1,10 +1,7 @@
 ﻿using SvetaLabs.MeasureTime;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 
 namespace SvetaLabs.Laba2
 {
@@ -45,7 +42,7 @@ namespace SvetaLabs.Laba2
         {
             var dict = new Dictionary<int, int>(); // словник де ключ наш елемент, а значення кількіть у матриці
 
-            foreach (var item in _matrix) 
+            foreach (var item in _matrix)
             {
                 if (dict.Keys.Contains(item)) // перевіряємо чи такий елемент був уже перевірений
                 {
@@ -53,10 +50,10 @@ namespace SvetaLabs.Laba2
                 }
                 else // якщо ні тоді перевіряємой кількіть таких елементій у матриці
                 {
-                    var result = FindCountOfNumber(_matrix, item); 
+                    var result = FindCountOfNumber(_matrix, item);
                     // функція FindCountOfNumber вертає кількіть елементів item у матриці _matrix
 
-                    dict.Add(item, result);  
+                    dict.Add(item, result);
                 }
             }
             Console.WriteLine("Done");
@@ -112,8 +109,8 @@ namespace SvetaLabs.Laba2
                 }
                 else
                 {
-                    Func<int[,], int, Tuple<int, int>> func = 
-                        new Func<int[,], int, Tuple<int, int>>(FindCountOfNumberAsync); 
+                    Func<int[,], int, Tuple<int, int>> func =
+                        new Func<int[,], int, Tuple<int, int>>(FindCountOfNumberAsync);
                     // створбємо делегат для функції FindCountOfNumberAsync 
                     IAsyncResult asyncResult = func.BeginInvoke(_matrix, item, null, null); // асинхронно запускаємо делегат
                     dict.Add(item, 0); // добавляємо значення у словник для того щоб знати що воно нам уже зустрічалося
