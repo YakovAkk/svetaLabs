@@ -2,6 +2,7 @@
 using SvetaLabs.Laba3;
 using SvetaLabs.Laba7;
 using SvetaLabs.Laba7.WorkWithFiles;
+using SvetaLabs.Laba8;
 using System;
 
 namespace SvetaLabs
@@ -19,8 +20,11 @@ namespace SvetaLabs
             //var laba6 = new Laba6Graf();
             //laba6.Start();
 
-            var laba7 = new Laba7CartesianProduct();
-            laba7.Start();
+            //var laba7 = new Laba7CartesianProduct();
+            //laba7.Start();
+
+            var laba8 = new Laba8Synchronization();
+            laba8.Start();
 
             Console.ReadKey();
         }

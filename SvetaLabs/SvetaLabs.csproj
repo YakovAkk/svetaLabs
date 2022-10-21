@@ -60,6 +60,7 @@
     <Compile Include="Laba7\WorkWithFiles\GenerateFiles.cs" />
     <Compile Include="Laba7\Laba7CartesianProduct.cs" />
     <Compile Include="Laba7\WorkWithFiles\ReadFromFile.cs" />
+    <Compile Include="Laba8\Laba8Synchronization.cs" />
     <Compile Include="MeasureTime\MeasureTheTime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

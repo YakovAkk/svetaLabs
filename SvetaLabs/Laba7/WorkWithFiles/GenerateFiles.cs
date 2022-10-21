@@ -41,7 +41,6 @@ namespace SvetaLabs.Laba7
                 file.Write(text);
             }
         }
-
         public void CreateFiles()
         {
             foreach (var item in pathToFiles) // записуємо масив у файл
