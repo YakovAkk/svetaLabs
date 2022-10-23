@@ -1,8 +1,9 @@
 ﻿using SvetaLabs.Laba2;
 using SvetaLabs.Laba3;
+using SvetaLabs.Laba4;
 using SvetaLabs.Laba7;
 using SvetaLabs.Laba7.WorkWithFiles;
-using SvetaLabs.Laba8;
+
 using System;
 
 namespace SvetaLabs
@@ -23,9 +24,8 @@ namespace SvetaLabs
             //var laba7 = new Laba7CartesianProduct();
             //laba7.Start();
 
-            var laba8 = new Laba8Synchronization();
-            laba8.Start();
-
+            var laba4 = new Laba4GaussJordanMethodThreadPool();
+            laba4.Start();
             Console.ReadKey();
         }
     }
